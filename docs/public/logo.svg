@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="unocss-preset">
+  <defs>
+    <linearGradient id="bg" x1="16" y1="8" x2="112" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60A5FA" />
+      <stop offset="0.5" stop-color="#3B82F6" />
+      <stop offset="1" stop-color="#7C3AED" />
+    </linearGradient>
+    <linearGradient id="gloss" x1="64" y1="0" x2="64" y2="128" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.28" />
+      <stop offset="0.55" stop-color="#fff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <rect width="128" height="128" rx="30" fill="url(#bg)" />
+  <rect width="128" height="128" rx="30" fill="url(#gloss)" />
+
+  <g fill="#fff" opacity="0.14">
+    <circle cx="24" cy="24" r="2.5" />
+    <circle cx="42" cy="24" r="2.5" />
+    <circle cx="60" cy="24" r="2.5" />
+    <circle cx="24" cy="42" r="2.5" />
+    <circle cx="42" cy="42" r="2.5" />
+    <circle cx="104" cy="104" r="2.5" />
+    <circle cx="86" cy="104" r="2.5" />
+    <circle cx="104" cy="86" r="2.5" />
+  </g>
+
+  <path
+    d="M40 40v24c0 13.255 10.745 24 24 24s24-10.745 24-24V40"
+    fill="none"
+    stroke="#fff"
+    stroke-width="13"
+    stroke-linecap="round"
+  />
+
+  <path
+    d="M92 20c1.4 6.2 3.8 8.6 10 10-6.2 1.4-8.6 3.8-10 10-1.4-6.2-3.8-8.6-10-10 6.2-1.4 8.6-3.8 10-10Z"
+    fill="#fff"
+  />
+</svg>

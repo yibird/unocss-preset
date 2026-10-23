@@ -1,0 +1,4 @@
+/* Keep the scrollbar gutter reserved so locking scroll does not shift the layout. */
+html {
+  scrollbar-gutter: stable;
+}
