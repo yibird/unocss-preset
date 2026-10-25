@@ -12,6 +12,7 @@ async function generate(input: string, options?: PresetUnocssOptions, preflights
         primary: '#3b82f6',
         brand: { 500: '#123456' },
         'light-blue': { 500: '#0ea5e9' },
+        regular: 'rgb(var(--w-border-regular))',
       },
     },
   })
@@ -23,38 +24,26 @@ describe('border rules', () => {
   it('defaults to a solid border when no style is given', async () => {
     const css = await generate('b-t-1-primary')
 
-    expect(css).toContain('border-top-width:1px;')
-    expect(css).toContain('border-top-style:solid;')
-    expect(css).toContain('border-top-color:#3b82f6;')
+    expect(css).toContain('.b-t-1-primary{border-top:1px solid #3b82f6;}')
   })
 
   it('applies to all directions when no direction is given', async () => {
     const css = await generate('b-1-red')
 
-    expect(css).toContain('border-top-width:1px;')
-    expect(css).toContain('border-right-width:1px;')
-    expect(css).toContain('border-bottom-width:1px;')
-    expect(css).toContain('border-left-width:1px;')
-    expect(css).toContain('border-top-color:red;')
-    expect(css).toContain('border-right-color:red;')
-    expect(css).toContain('border-bottom-color:red;')
-    expect(css).toContain('border-left-color:red;')
+    expect(css).toContain('.b-1-red{border:1px solid red;}')
   })
 
-  it('emits exactly four longhands per side without a direction', async () => {
+  it('emits a single border shorthand without a direction', async () => {
     const css = await generate('b-2-red')
 
-    expect(css.match(/border-(?:top|right|bottom|left)-width/g)).toHaveLength(4)
-    expect(css.match(/border-(?:top|right|bottom|left)-style/g)).toHaveLength(4)
-    expect(css.match(/border-(?:top|right|bottom|left)-color/g)).toHaveLength(4)
+    expect(css).toContain('.b-2-red{border:2px solid red;}')
+    expect(css).not.toContain('border-top-width')
   })
 
   it('supports style, width and color', async () => {
     const css = await generate('b-b-dashed-2-red')
 
-    expect(css).toContain('border-bottom-width:2px;')
-    expect(css).toContain('border-bottom-style:dashed;')
-    expect(css).toContain('border-bottom-color:red;')
+    expect(css).toContain('.b-b-dashed-2-red{border-bottom:2px dashed red;}')
   })
 
   it('supports every style', async () => {
@@ -62,64 +51,50 @@ describe('border rules', () => {
       'b-t-solid-1-red b-r-dashed-2-blue b-b-dotted-3-green b-l-double-4-black',
     )
 
-    expect(css).toContain('border-top-style:solid;')
-    expect(css).toContain('border-right-style:dashed;')
-    expect(css).toContain('border-bottom-style:dotted;')
-    expect(css).toContain('border-left-style:double;')
+    expect(css).toContain('.b-t-solid-1-red{border-top:1px solid red;}')
+    expect(css).toContain('.b-r-dashed-2-blue{border-right:2px dashed blue;}')
+    expect(css).toContain('.b-b-dotted-3-green{border-bottom:3px dotted green;}')
+    expect(css).toContain('.b-l-double-4-black{border-left:4px double #000;}')
   })
 
   it('supports a style without a direction', async () => {
     const css = await generate('b-dotted-2-blue')
 
-    expect(css).toContain('border-top-style:dotted;')
-    expect(css).toContain('border-left-width:2px;')
-    expect(css).toContain('border-bottom-color:blue;')
+    expect(css).toContain('.b-dotted-2-blue{border:2px dotted blue;}')
   })
 
   it('supports an explicit solid style without a direction', async () => {
     const css = await generate('b-solid-1-red')
 
-    expect(css).toContain('border-top-style:solid;')
-    expect(css).toContain('border-left-style:solid;')
+    expect(css).toContain('.b-solid-1-red{border:1px solid red;}')
   })
 
   it('supports width without an explicit style', async () => {
     const css = await generate('b-l-2-red')
 
-    expect(css).toContain('border-left-width:2px;')
-    expect(css).toContain('border-left-style:solid;')
-    expect(css).toContain('border-left-color:red;')
+    expect(css).toContain('.b-l-2-red{border-left:2px solid red;}')
   })
 
   it('requires an explicit width', async () => {
     const css = await generate('b-t-blue b-dotted-primary b-red b-dashed-red')
 
-    expect(css).not.toContain('border-top-width')
-    expect(css).not.toContain('border-left-width')
+    expect(css).not.toContain('border-top:')
+    expect(css).not.toContain('border-left:')
   })
 
   it('supports every single direction', async () => {
     const css = await generate('b-t-1-red b-r-2-blue b-b-3-green b-l-4-black')
 
-    expect(css).toContain('border-top-width:1px;')
-    expect(css).toContain('border-right-width:2px;')
-    expect(css).toContain('border-bottom-width:3px;')
-    expect(css).toContain('border-left-width:4px;')
-    expect(css).toContain('border-top-color:red;')
-    expect(css).toContain('border-right-color:blue;')
-    expect(css).toContain('border-bottom-color:green;')
-    expect(css).toContain('border-left-color:#000;')
+    expect(css).toContain('.b-t-1-red{border-top:1px solid red;}')
+    expect(css).toContain('.b-r-2-blue{border-right:2px solid blue;}')
+    expect(css).toContain('.b-b-3-green{border-bottom:3px solid green;}')
+    expect(css).toContain('.b-l-4-black{border-left:4px solid #000;}')
   })
 
   it('supports the all direction', async () => {
     const css = await generate('b-all-2-red')
 
-    expect(css).toContain('border-top-width:2px;')
-    expect(css).toContain('border-right-width:2px;')
-    expect(css).toContain('border-bottom-width:2px;')
-    expect(css).toContain('border-left-width:2px;')
-    expect(css).toContain('border-top-style:solid;')
-    expect(css).toContain('border-left-color:red;')
+    expect(css).toContain('.b-all-2-red{border:2px solid red;}')
   })
 
   it('treats all the same as omitting the direction', async () => {
@@ -133,181 +108,193 @@ describe('border rules', () => {
   it('supports a style with the all direction', async () => {
     const css = await generate('b-all-dashed-1-red')
 
-    expect(css).toContain('border-top-style:dashed;')
-    expect(css).toContain('border-right-style:dashed;')
-    expect(css).toContain('border-bottom-style:dashed;')
-    expect(css).toContain('border-left-style:dashed;')
+    expect(css).toContain('.b-all-dashed-1-red{border:1px dashed red;}')
   })
 
   it('expands x to left and right only', async () => {
     const css = await generate('b-x-dotted-3-red')
 
-    expect(css).toContain('border-left-width:3px;')
-    expect(css).toContain('border-right-width:3px;')
-    expect(css).toContain('border-left-style:dotted;')
-    expect(css).toContain('border-right-style:dotted;')
-    expect(css).not.toContain('border-top-width')
-    expect(css).not.toContain('border-bottom-width')
+    expect(css).toContain('border-left:3px dotted red;')
+    expect(css).toContain('border-right:3px dotted red;')
+    expect(css).not.toContain('border-top:')
+    expect(css).not.toContain('border-bottom:')
   })
 
   it('expands y to top and bottom only', async () => {
     const css = await generate('b-y-double-1-blue')
 
-    expect(css).toContain('border-top-width:1px;')
-    expect(css).toContain('border-bottom-width:1px;')
-    expect(css).toContain('border-top-style:double;')
-    expect(css).toContain('border-bottom-style:double;')
-    expect(css).not.toContain('border-left-width')
-    expect(css).not.toContain('border-right-width')
+    expect(css).toContain('border-top:1px double blue;')
+    expect(css).toContain('border-bottom:1px double blue;')
+    expect(css).not.toContain('border-left:')
+    expect(css).not.toContain('border-right:')
   })
 
   it('handles zero and multi-digit widths', async () => {
     const css = await generate('b-t-0-red b-b-12-blue')
 
-    expect(css).toContain('border-top-width:0px;')
-    expect(css).toContain('border-bottom-width:12px;')
+    expect(css).toContain('border-top:0px solid red;')
+    expect(css).toContain('border-bottom:12px solid blue;')
   })
 
   it('ignores unsupported styles', async () => {
     const css = await generate('b-t-wavy-2-red b-wavy-2-red b-t-Solid-2-red')
 
-    expect(css).not.toContain('border-top')
-    expect(css).not.toContain('border-left')
+    expect(css).not.toContain('border-top:')
+    expect(css).not.toContain('border-left:')
   })
 
   it('ignores an unsupported order', async () => {
     const css = await generate('b-t-red-1 b-t-red-dashed-1')
 
-    expect(css).not.toContain('border-top-width')
-    expect(css).not.toContain('border-top-color')
+    expect(css).not.toContain('border-top:')
   })
 
   it('does not support arbitrary widths', async () => {
     const css = await generate('b-t-[2px]-red')
 
-    expect(css).not.toContain('border-top-width')
+    expect(css).not.toContain('border-top:')
   })
 
   it('requires a color', async () => {
     const css = await generate('b-t-1 b-t-1-')
 
-    expect(css).not.toContain('border-top-color')
+    expect(css).not.toContain('border-top:')
   })
 
   it('resolves theme colors', async () => {
     const css = await generate('b-t-1-primary')
 
-    expect(css).toContain('border-top-color:#3b82f6;')
-    expect(css).not.toContain('border-top-color:primary;')
+    expect(css).toContain('border-top:1px solid #3b82f6;')
+    expect(css).not.toContain('border-top:1px solid primary;')
   })
 
   it('resolves nested theme colors', async () => {
     const css = await generate('b-t-1-blue-500 b-t-1-brand-500 b-t-1-light-blue-500')
 
-    expect(css).toContain('border-top-color:')
-    expect(css).not.toContain('border-top-color:blue-500;')
-    expect(css).toContain('border-top-color:#123456;')
-    expect(css).toContain('border-top-color:#0ea5e9;')
+    expect(css).toContain('border-top:1px solid')
+    expect(css).not.toContain('border-top:1px solid blue-500;')
+    expect(css).toContain('border-top:1px solid #123456;')
+    expect(css).toContain('border-top:1px solid #0ea5e9;')
   })
 
   it('supports raw CSS colors', async () => {
     const css = await generate('b-1-red b-1-rebeccapurple')
 
-    expect(css).toContain('border-top-color:red;')
-    expect(css).toContain('border-bottom-color:rebeccapurple;')
+    expect(css).toContain('.b-1-red{border:1px solid red;}')
+    expect(css).toContain('.b-1-rebeccapurple{border:1px solid rebeccapurple;}')
   })
 
   it('supports color functions', async () => {
     const css = await generate('b-t-1-rgb(1,2,3) b-t-1-hsl(0,0%,0%) b-t-1-oklch(70%,0.1,200)')
 
-    expect(css).toContain('border-top-color:rgb(1,2,3);')
-    expect(css).toContain('border-top-color:hsl(0,0%,0%);')
-    expect(css).toContain('border-top-color:oklch(70%,0.1,200);')
+    expect(css).toContain('border-top:1px solid rgb(1,2,3);')
+    expect(css).toContain('border-top:1px solid hsl(0,0%,0%);')
+    expect(css).toContain('border-top:1px solid oklch(70%,0.1,200);')
   })
 
   it('supports arbitrary colors', async () => {
     const css = await generate('b-t-1-[#fff] b-b-1-[rgb(1,2,3)] b-x-1-[var(--bc)]')
 
-    expect(css).toContain('border-top-color:#fff;')
-    expect(css).toContain('border-bottom-color:rgb(1,2,3);')
-    expect(css).toContain('border-left-color:var(--bc);')
-    expect(css).toContain('border-right-color:var(--bc);')
+    expect(css).toContain('border-top:1px solid #fff;')
+    expect(css).toContain('border-bottom:1px solid rgb(1,2,3);')
+    expect(css).toContain('border-left:1px solid var(--bc);')
+    expect(css).toContain('border-right:1px solid var(--bc);')
   })
 
   it('resolves theme colors inside brackets', async () => {
     const css = await generate('b-1-[primary] b-t-1-[brand-500] b-t-1-[light-blue-500]')
 
-    expect(css).toContain('border-top-color:#3b82f6;')
-    expect(css).toContain('border-right-color:#3b82f6;')
-    expect(css).toContain('border-top-color:#123456;')
-    expect(css).toContain('border-top-color:#0ea5e9;')
-    expect(css).not.toContain('border-top-color:primary;')
-    expect(css).not.toContain('border-top-color:brand-500;')
+    expect(css).toContain('.b-1-\\[primary\\]{border:1px solid #3b82f6;}')
+    expect(css).toContain('border-top:1px solid #123456;')
+    expect(css).toContain('border-top:1px solid #0ea5e9;')
+    expect(css).not.toContain('border:1px solid primary;')
+    expect(css).not.toContain('border-top:1px solid brand-500;')
   })
 
   it('supports opacity on bracketed theme colors', async () => {
     const css = await generate('b-t-1-[primary]/50')
 
-    expect(css).toContain('border-top-color:color-mix(in srgb, #3b82f6 50%, transparent);')
+    expect(css).toContain('border-top:1px solid color-mix(in srgb, #3b82f6 50%, transparent);')
+  })
+
+  it('strips a border- prefix when resolving theme colors', async () => {
+    const css = await generate('b-1-[border-regular]')
+
+    expect(css).toContain('border:1px solid rgb(var(--w-border-regular));')
+    expect(css).not.toContain('border:1px solid border-regular;')
+  })
+
+  it('strips a border- prefix without brackets', async () => {
+    const css = await generate('b-t-1-border-regular')
+
+    expect(css).toContain('border-top:1px solid rgb(var(--w-border-regular));')
+  })
+
+  it('coexists with UnoCSS border color utilities', async () => {
+    const css = await generate('border-regular bg-regular b-1-[border-regular]')
+
+    expect(css).toContain('.border-regular{border-color:')
+    expect(css).toContain('.bg-regular{background-color:')
+    expect(css).toContain(
+      '.b-1-\\[border-regular\\]{border:1px solid rgb(var(--w-border-regular));}',
+    )
   })
 
   it('supports opacity modifiers', async () => {
     const css = await generate('b-t-1-primary/50 b-t-1-red/[0.5]')
 
-    expect(css).toContain('border-top-color:color-mix(in srgb, #3b82f6 50%, transparent);')
-    expect(css).toContain('border-top-color:color-mix(in srgb, red 50%, transparent);')
+    expect(css).toContain('border-top:1px solid color-mix(in srgb, #3b82f6 50%, transparent);')
+    expect(css).toContain('border-top:1px solid color-mix(in srgb, red 50%, transparent);')
   })
 
   it('supports decimal, percentage and arbitrary opacity values', async () => {
     const css = await generate('b-1-primary/0.5 b-1-primary/[0.25] b-1-primary/25% b-1-primary/100')
 
-    expect(css).toContain('border-top-color:color-mix(in srgb, #3b82f6 50%, transparent);')
-    expect(css).toContain('border-top-color:color-mix(in srgb, #3b82f6 25%, transparent);')
-    expect(css).toContain('border-top-color:color-mix(in srgb, #3b82f6 100%, transparent);')
+    expect(css).toContain('border:1px solid color-mix(in srgb, #3b82f6 50%, transparent);')
+    expect(css).toContain('border:1px solid color-mix(in srgb, #3b82f6 25%, transparent);')
+    expect(css).toContain('border:1px solid color-mix(in srgb, #3b82f6 100%, transparent);')
   })
 
   it('supports opacity on arbitrary colors', async () => {
     const css = await generate('b-1-[#fff]/50')
 
-    expect(css).toContain('border-top-color:color-mix(in srgb, #fff 50%, transparent);')
-    expect(css).toContain('border-bottom-color:color-mix(in srgb, #fff 50%, transparent);')
+    expect(css).toContain('border:1px solid color-mix(in srgb, #fff 50%, transparent);')
   })
 
   it('ignores invalid opacity values', async () => {
     const css = await generate('b-t-1-red/abc b-t-1-primary/nope')
 
-    expect(css).not.toContain('border-top-color')
+    expect(css).not.toContain('border-top:')
   })
 
   it('rejects empty and negative opacity values', async () => {
     const css = await generate('b-t-1-red/[] b-t-1-red/-1')
 
-    expect(css).not.toContain('border-top-color')
+    expect(css).not.toContain('border-top:')
   })
 
   it('supports leading-dot percentage opacity', async () => {
     const css = await generate('b-t-1-red/.5%')
 
-    expect(css).toContain('border-top-color:color-mix(in srgb, red .5%, transparent);')
+    expect(css).toContain('border-top:1px solid color-mix(in srgb, red .5%, transparent);')
   })
 
   it('keeps slashes inside arbitrary values', async () => {
     const css = await generate('b-t-1-[rgb(1_2_3_/_50%)]')
 
-    expect(css).toContain('border-top-color:rgb(1 2 3 / 50%);')
+    expect(css).toContain('border-top:1px solid rgb(1 2 3 / 50%);')
   })
 
   it('still supports opacity after an arbitrary value', async () => {
     const css = await generate('b-t-1-[rgb(1,2,3)]/50')
 
-    expect(css).toContain('border-top-color:color-mix(in srgb, rgb(1,2,3) 50%, transparent);')
+    expect(css).toContain('border-top:1px solid color-mix(in srgb, rgb(1,2,3) 50%, transparent);')
   })
 
   it('ignores unknown colors', async () => {
     const css = await generate('b-t-1-unknown-color b-t-1-unknown')
 
-    expect(css).not.toContain('border-top-width')
-    expect(css).not.toContain('border-top-color')
+    expect(css).not.toContain('border-top:')
   })
 
   it('works with variants', async () => {
@@ -315,14 +302,13 @@ describe('border rules', () => {
 
     expect(css).toContain(':hover')
     expect(css).toContain(':focus-visible')
-    expect(css).toContain('border-top-width:1px;')
+    expect(css).toContain('border-top:1px solid #3b82f6;')
   })
 
   it('supports the all direction with opacity', async () => {
     const css = await generate('b-all-1-primary/50')
 
-    expect(css).toContain('border-top-color:color-mix(in srgb, #3b82f6 50%, transparent);')
-    expect(css).toContain('border-left-color:color-mix(in srgb, #3b82f6 50%, transparent);')
+    expect(css).toContain('border:1px solid color-mix(in srgb, #3b82f6 50%, transparent);')
   })
 })
 
@@ -527,11 +513,11 @@ describe('options', () => {
   it('applies a custom prefix', async () => {
     const unprefixed = await generate('b-t-1-primary')
 
-    expect(unprefixed).toContain('border-top-width:1px;')
+    expect(unprefixed).toContain('border-top:1px solid #3b82f6;')
 
     const prefixed = await generate('u-b-t-1-primary', { prefix: 'u-' })
 
-    expect(prefixed).toContain('border-top-width:1px;')
+    expect(prefixed).toContain('border-top:1px solid #3b82f6;')
   })
 
   it('does not match unprefixed utilities when a prefix is set', async () => {

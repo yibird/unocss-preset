@@ -21,35 +21,30 @@ const sizes: Record<SizeKey, Size> = {
   '2xl': { offset: 25, blur: 50, spread: -12, color: 'rgba(0, 0, 0, 0.25)' },
 }
 
-function generateBoxShadows() {
-  return directions.reduce((acc: BoxShadowStyles, direction: Direction) => {
-    Object.keys(sizes).forEach((sizeKey: string) => {
-      const size = sizes[sizeKey as SizeKey]
-      const key = `${direction}${sizeKey ? '-' + sizeKey : sizeKey}`
-      let boxShadow: string
-
-      if (direction === 'all') {
-        boxShadow = `0px 0px ${size.blur}px ${size.spread}px ${size.color}`
-      } else {
-        const horizontalOffset = ['l', 'r'].includes(direction)
-          ? direction === 'r'
-            ? size.offset
-            : -size.offset
-          : 0
-        const verticalOffset = ['t', 'b'].includes(direction)
-          ? direction === 'b'
-            ? size.offset
-            : -size.offset
-          : 0
-        boxShadow = `${horizontalOffset}px ${verticalOffset}px ${size.blur}px ${size.spread}px ${size.color}`
-      }
-      acc[key] = { 'box-shadow': boxShadow }
-    })
-    return acc
-  }, {} as BoxShadowStyles)
+/** X/Y multipliers for each direction; `all` is centered. */
+const offsets: Record<Direction, [number, number]> = {
+  t: [0, -1],
+  r: [1, 0],
+  b: [0, 1],
+  l: [-1, 0],
+  all: [0, 0],
 }
 
-const shadows = generateBoxShadows()
+function createBoxShadow(direction: Direction, size: Size): string {
+  const [x, y] = offsets[direction]
+  return `${x * size.offset}px ${y * size.offset}px ${size.blur}px ${size.spread}px ${size.color}`
+}
+
+const sizeEntries = Object.entries(sizes) as Array<[SizeKey, Size]>
+
+const shadows: BoxShadowStyles = Object.fromEntries(
+  directions.flatMap((direction) =>
+    sizeEntries.map(([sizeKey, size]) => [
+      `${direction}${sizeKey ? `-${sizeKey}` : ''}`,
+      { 'box-shadow': createBoxShadow(direction, size) },
+    ]),
+  ),
+)
 
 /**
  * 规则格式: shadow-[方向][-尺寸]

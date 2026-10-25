@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.3] - 2026-10-25
+
+### Changed
+
+- Border utilities now emit CSS shorthands (`border` for all sides, `border-top` and friends for single sides) instead of three longhands per side
+- Simplified the shadow rule internals; generated output is unchanged
+
+### Fixed
+
+- Arbitrary values such as `b-1-[border-regular]` and colors such as `b-1-border-regular` now resolve the `regular` theme token instead of emitting the raw name
+
+### Docs
+
+- Expanded border and shadow examples with direction, style, size, opacity, arbitrary value and theme token cases
+- Added theme color tokens to the documentation playground for coexistence checks
+- Removed the standalone demo page from the navigation
+
 ## [0.0.2] - 2026-10-25
 
 ### Added

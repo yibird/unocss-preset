@@ -20,19 +20,27 @@ b-[<方向>][-<样式>]-<宽度>-<颜色>
 | `b-t-1-blue-500`   | 主题中 `blue.500` 的颜色                         |
 | `b-t-1-primary/50` | `color-mix(in srgb, <primary> 50%, transparent)` |
 | `b-t-1-[primary]`  | 主题色 `primary`（括号内同样会解析主题）         |
-| `b-t-1-[#fff]`     | `border-color: #fff`                             |
-| `b-t-1-rgb(1,2,3)` | `border-color: rgb(1,2,3)`                       |
+| `b-t-1-[#fff]`     | `border-top: 1px solid #fff`                     |
+| `b-t-1-rgb(1,2,3)` | `border-top: 1px solid rgb(1,2,3)`               |
 
-| 工具类                 | 输出                             |
-| ---------------------- | -------------------------------- |
-| `b-1-primary`          | 所有方向，1px solid primary      |
-| `b-all-1-primary`      | 所有方向，1px solid primary      |
-| `b-t-1-primary`        | `border-top: 1px solid primary`  |
-| `b-t-dashed-1-primary` | `border-top: 1px dashed primary` |
-| `b-b-dashed-2-red`     | `border-bottom: 2px dashed red`  |
-| `b-l-2-red`            | `border-left: 2px solid red`     |
-| `b-x-dotted-3-primary` | 左右边框，3px dotted primary     |
-| `b-y-double-1-gray`    | 上下边框，1px double gray        |
+边框统一输出 CSS 简写，全方向使用 `border`：
+
+| 工具类                  | 输出                                          |
+| ----------------------- | --------------------------------------------- |
+| `b-1-primary`           | `border: 1px solid primary`                   |
+| `b-all-1-primary`       | `border: 1px solid primary`                   |
+| `b-t-1-primary`         | `border-top: 1px solid primary`               |
+| `b-t-dashed-1-primary`  | `border-top: 1px dashed primary`              |
+| `b-r-2-red`             | `border-right: 2px solid red`                 |
+| `b-b-dashed-2-red`      | `border-bottom: 2px dashed red`               |
+| `b-l-2-red`             | `border-left: 2px solid red`                  |
+| `b-x-dotted-3-primary`  | `border-left` + `border-right`，3px dotted    |
+| `b-y-double-1-gray`     | `border-top` + `border-bottom`，1px double    |
+| `b-all-double-3-purple` | `border: 3px double purple`                   |
+| `b-1-primary/50`        | `border: 1px solid color-mix(primary 50%, …)` |
+| `b-1-[#fff]/50`         | `border: 1px solid color-mix(#fff 50%, …)`    |
+| `b-1-regular`           | `border: 1px solid <regular token>`           |
+| `b-1-[border-regular]`  | `border: 1px solid <regular token>`           |
 
 不支持的样式不会生成任何 CSS：
 
@@ -43,13 +51,29 @@ b-[<方向>][-<样式>]-<宽度>-<颜色>
 ### 效果
 
 <div class="grid gap-3 mt-4 text-sm">
+  <div class="b-1-primary p-3">b-1-primary</div>
+  <div class="b-all-dashed-2-regular p-3">b-all-dashed-2-regular</div>
   <div class="b-t-4-primary p-3">b-t-4-primary</div>
   <div class="b-r-dashed-2-red p-3">b-r-dashed-2-red</div>
   <div class="b-b-dotted-3-green p-3">b-b-dotted-3-green</div>
   <div class="b-l-double-4-orange p-3">b-l-double-4-orange</div>
   <div class="b-x-dashed-1-blue p-3">b-x-dashed-1-blue</div>
   <div class="b-y-dotted-2-purple p-3">b-y-dotted-2-purple</div>
+  <div class="b-1-[#f97316]/50 p-3">b-1-[#f97316]/50</div>
+  <div class="b-1-[border-regular] p-3">b-1-[border-regular]</div>
 </div>
+
+主题里的颜色 token（例如 `regular`）可以和 UnoCSS 原生边框颜色工具共存：
+
+<div class="grid gap-3 mt-4 text-sm">
+  <div class="b-1-[border-regular] p-3">b-1-[border-regular]</div>
+  <div class="b-1-regular p-3">b-1-regular</div>
+  <div class="bg-regular p-3">bg-regular</div>
+</div>
+
+`border-regular` 由 presetWind4 生成 `border-color`，本插件的 `b-1-[border-regular]`
+生成 `border: 1px solid ...` 简写，两者选择器不同、不会互相覆盖。若在同一元素上混用，
+简写会覆盖同侧的 width/style/color。
 
 边框也可以和变体组合，悬浮或聚焦试试：
 
@@ -68,13 +92,31 @@ shadow-[<方向>][-<尺寸>]
 - 方向：`t` / `r` / `b` / `l` / `all`，不写时等同于 `all`
 - 尺寸：`sm` / `md` / `lg` / `xl` / `2xl`，不写时使用默认尺寸
 
-| 工具类           | 输出                                        |
-| ---------------- | ------------------------------------------- |
-| `shadow-t`       | 顶部阴影，默认尺寸                          |
-| `shadow-b-md`    | 底部阴影，`0 4px 6px -1px rgba(0,0,0,.1)`   |
-| `shadow-r-xl`    | 右侧阴影，`20px 0 25px -5px rgba(0,0,0,.1)` |
-| `shadow-all-2xl` | 四周阴影，`0 0 50px -12px rgba(0,0,0,.25)`  |
-| `shadow-md`      | 等同于 `shadow-all-md`，四周 `0 0 6px -1px` |
+| 工具类           | 输出                                   |
+| ---------------- | -------------------------------------- |
+| `shadow-t`       | `0 -1px 3px 0 rgba(0,0,0,.1)`          |
+| `shadow-t-sm`    | `0 -1px 2px 0 rgba(0,0,0,.05)`         |
+| `shadow-r-md`    | `4px 0 6px -1px rgba(0,0,0,.1)`        |
+| `shadow-b-lg`    | `0 10px 15px -3px rgba(0,0,0,.1)`      |
+| `shadow-l-xl`    | `-20px 0 25px -5px rgba(0,0,0,.1)`     |
+| `shadow-b-md`    | `0 4px 6px -1px rgba(0,0,0,.1)`        |
+| `shadow-r-xl`    | `20px 0 25px -5px rgba(0,0,0,.1)`      |
+| `shadow-all-2xl` | `0 0 50px -12px rgba(0,0,0,.25)`       |
+| `shadow-md`      | 等同于 `shadow-all-md`，`0 0 6px -1px` |
+
+### 效果
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4 p-4 text-sm">
+  <div class="shadow-t-md p-4 rounded bg-white b-1">shadow-t-md</div>
+  <div class="shadow-r-md p-4 rounded bg-white b-1">shadow-r-md</div>
+  <div class="shadow-b-lg p-4 rounded bg-white b-1">shadow-b-lg</div>
+  <div class="shadow-l-xl p-4 rounded bg-white b-1">shadow-l-xl</div>
+  <div class="shadow-md p-4 rounded bg-white b-1">shadow-md</div>
+  <div class="shadow-all-2xl p-4 rounded bg-white b-1">shadow-all-2xl</div>
+</div>
+
+> 本 preset 在 presetWind4 之后注册，因此 `shadow-md` 等标准名称会由本规则接管，
+> 输出上面的单层阴影，而不是 presetWind4 的多层阴影。
 
 ## 字号
 

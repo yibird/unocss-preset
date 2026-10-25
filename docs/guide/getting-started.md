@@ -66,4 +66,3 @@ export default defineConfig({
 - [规则](/guide/rules)
 - [快捷方式](/guide/shortcuts)
 - [配置项](/guide/options)
-- [示例](/guide/demo)

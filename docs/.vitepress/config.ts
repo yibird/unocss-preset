@@ -11,7 +11,6 @@ const zhSidebar = [
       { text: '规则', link: '/guide/rules' },
       { text: '快捷方式', link: '/guide/shortcuts' },
       { text: '配置项', link: '/guide/options' },
-      { text: '示例', link: '/guide/demo' },
     ],
   },
 ]
@@ -24,7 +23,6 @@ const enSidebar = [
       { text: 'Rules', link: '/en/guide/rules' },
       { text: 'Shortcuts', link: '/en/guide/shortcuts' },
       { text: 'Options', link: '/en/guide/options' },
-      { text: 'Demo', link: '/en/guide/demo' },
     ],
   },
 ]
@@ -45,6 +43,13 @@ export default defineConfig({
         theme: {
           colors: {
             primary: '#3b82f6',
+            // Same token shape as a real project's `borderColorTokens`.
+            main: 'rgb(var(--w-border-main))',
+            regular: 'rgb(var(--w-border-regular))',
+            secondary: 'rgb(var(--w-border-secondary))',
+            muted: 'rgb(var(--w-border-muted))',
+            placeholder: 'rgb(var(--w-border-placeholder))',
+            disabled: 'rgb(var(--w-border-disabled))',
           },
         },
       }),

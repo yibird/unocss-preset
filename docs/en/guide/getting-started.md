@@ -68,4 +68,3 @@ Result:
 - [Rules](/en/guide/rules)
 - [Shortcuts](/en/guide/shortcuts)
 - [Options](/en/guide/options)
-- [Demo](/en/guide/demo)

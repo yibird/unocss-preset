@@ -87,6 +87,27 @@ function toPercentage(value: string): string | undefined {
   return `${percent}%`
 }
 
+interface ColorTheme {
+  colors?: unknown
+  borderColor?: unknown
+}
+
+/**
+ * Looks a color up in the theme. A leading `border-` is ignored so that
+ * `border-regular` resolves the `regular` token.
+ */
+function resolveThemeColor(input: string, theme: ColorTheme): string | undefined {
+  const lookup = (key: string) => {
+    const parts = key.split('-')
+    return lookupColor(theme.colors, parts) ?? lookupColor(theme.borderColor, parts)
+  }
+
+  return (
+    lookup(input) ??
+    (input.startsWith('border-') ? lookup(input.slice('border-'.length)) : undefined)
+  )
+}
+
 /**
  * Resolves theme colors, opacity modifiers and arbitrary values.
  *
@@ -94,19 +115,20 @@ function toPercentage(value: string): string | undefined {
  * - `blue-500` → nested theme color
  * - `primary/50` → `color-mix(...)`
  * - `[#fff]` → `#fff`
+ * - `[border-regular]` → the `regular` theme color
  * - `red` / `rgb(1,2,3)` → raw CSS colors
  */
-function resolveColor(input: string, colors: unknown): string | undefined {
+function resolveColor(input: string, theme: ColorTheme): string | undefined {
   const [raw, opacity] = splitOpacity(input)
 
   let resolved: string | undefined
   if (raw.startsWith('[') && raw.endsWith(']')) {
     const inner = raw.slice(1, -1)
     // Arbitrary values still resolve theme colors, e.g. `[primary]` → `#3b82f6`.
-    resolved = lookupColor(colors, inner.split('-')) ?? inner.replaceAll('_', ' ')
+    resolved = resolveThemeColor(inner, theme) ?? inner.replaceAll('_', ' ')
   } else {
     resolved =
-      lookupColor(colors, raw.split('-')) ??
+      resolveThemeColor(raw, theme) ??
       (namedColors.has(raw.toLowerCase()) || isColorFunction(raw) ? raw : undefined)
   }
 
@@ -137,15 +159,17 @@ export const borderRules: Rule[] = [
     /^b-(?:(all|[trblxy])-)?(?:(solid|dashed|dotted|double)-)?(\d+)-(.+)$/,
     ([, direction, style, width, color], { theme }) => {
       if (!width || !color) return
-      const properties = borderDirections[(direction ?? 'all') as BorderDirection]
-      const resolvedColor = resolveColor(color, (theme as { colors?: unknown }).colors)
+      const resolvedColor = resolveColor(color, theme as ColorTheme)
       if (!resolvedColor) return
 
+      const shorthand = `${width}px ${style ?? 'solid'} ${resolvedColor}`
       const declarations: Record<string, string> = {}
-      for (const s of properties) {
-        declarations[`border-${s}-width`] = `${width}px`
-        declarations[`border-${s}-style`] = style ?? 'solid'
-        declarations[`border-${s}-color`] = resolvedColor
+      if (!direction || direction === 'all') {
+        declarations.border = shorthand
+      } else {
+        for (const s of borderDirections[direction as BorderDirection]) {
+          declarations[`border-${s}`] = shorthand
+        }
       }
       return declarations
     },

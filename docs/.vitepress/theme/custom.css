@@ -2,3 +2,12 @@
 html {
   scrollbar-gutter: stable;
 }
+
+:root {
+  --w-border-main: 59 130 246;
+  --w-border-regular: 156 163 175;
+  --w-border-secondary: 209 213 219;
+  --w-border-muted: 229 231 235;
+  --w-border-placeholder: 203 213 225;
+  --w-border-disabled: 243 244 246;
+}

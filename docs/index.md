@@ -12,9 +12,6 @@ hero:
     - theme: brand
       text: 快速开始
       link: /guide/getting-started
-    - theme: alt
-      text: 示例
-      link: /guide/demo
 
 features:
   - title: 边框

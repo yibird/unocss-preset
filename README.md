@@ -22,8 +22,6 @@ pnpm docs:build   # 构建文档站
 - 快捷方式：尺寸、元素、flex/grid/定位、动效与交互反馈
 - 支持 `prefix`
 
-文档包含一个由预设实时渲染的 [示例页面](./docs/guide/demo.md)。
-
 ## 安装
 
 ```bash

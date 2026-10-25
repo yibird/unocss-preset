@@ -12,9 +12,6 @@ hero:
     - theme: brand
       text: Get Started
       link: /en/guide/getting-started
-    - theme: alt
-      text: Demo
-      link: /en/guide/demo
 
 features:
   - title: Borders

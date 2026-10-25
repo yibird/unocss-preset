@@ -25,8 +25,6 @@ not load UnoCSS styles.
 - Shortcuts: size, element, flex/grid/position, motion and interaction effects
 - Optional `prefix`
 
-The docs include a [live demo](./docs/en/guide/demo.md) rendered with the preset.
-
 ## Install
 
 ```bash
