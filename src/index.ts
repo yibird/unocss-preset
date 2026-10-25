@@ -1,7 +1,7 @@
 import type { Preset, Variant } from '@unocss/core'
 import { definePreset } from '@unocss/core'
 import { shortcuts } from './shortcuts'
-import { rules } from './rules'
+import { createRules } from './rules'
 
 /**
  * Options accepted by {@link presetUnocss}.
@@ -12,6 +12,13 @@ export interface PresetUnocssOptions {
    * @default undefined
    */
   prefix?: string
+  /**
+   * Extra color tokens used by border utilities, in addition to the theme.
+   * Useful when tokens are defined through custom UnoCSS rules instead of
+   * `theme.colors`, for example `borderColors: borderColorTokens`.
+   * @default undefined
+   */
+  borderColors?: Record<string, unknown>
 }
 
 /**
@@ -43,7 +50,7 @@ export const presetUnocss = definePreset<PresetUnocssOptions>((options = {}) => 
   const { prefix } = options
   const preset: Preset = {
     name: 'unocss-preset',
-    rules,
+    rules: createRules(options),
     variants: [hocusVariant],
     shortcuts,
     prefix: prefix,

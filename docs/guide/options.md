@@ -7,6 +7,11 @@ interface PresetUnocssOptions {
    * @default undefined
    */
   prefix?: string
+  /**
+   * 边框工具类可用的额外颜色 token，补充 theme.colors。
+   * @default undefined
+   */
+  borderColors?: Record<string, unknown>
 }
 ```
 
@@ -26,6 +31,28 @@ presetUnocss({ prefix: 'u-' })
 
 ```html
 <button class="hocus:u-cv-auto">按钮</button>
+```
+
+## borderColors
+
+如果你的边框颜色 token 是通过自定义 UnoCSS rule 定义的（而不是放在
+`theme.colors`），本预设无法读取那些 rule。把 token 传给 `borderColors` 即可让
+`b-*` 工具类解析它们：
+
+```ts
+const borderColorTokens = {
+  main: 'rgb(var(--w-border-main))',
+  regular: 'rgb(var(--w-border-regular))',
+}
+
+export default defineConfig({
+  presets: [presetWind4(), presetUnocss({ borderColors: borderColorTokens })],
+})
+```
+
+```html
+<div class="b-1-[border-regular]"></div>
+<div class="b-1-regular"></div>
 ```
 
 ## 与 presetWind4 组合

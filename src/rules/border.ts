@@ -93,13 +93,21 @@ interface ColorTheme {
 }
 
 /**
- * Looks a color up in the theme. A leading `border-` is ignored so that
- * `border-regular` resolves the `regular` token.
+ * Looks a color up in the preset options and the theme. A leading `border-`
+ * is ignored so that `border-regular` resolves the `regular` token.
  */
-function resolveThemeColor(input: string, theme: ColorTheme): string | undefined {
+function resolveThemeColor(
+  input: string,
+  theme: ColorTheme,
+  borderColors: unknown,
+): string | undefined {
   const lookup = (key: string) => {
     const parts = key.split('-')
-    return lookupColor(theme.colors, parts) ?? lookupColor(theme.borderColor, parts)
+    return (
+      lookupColor(borderColors, parts) ??
+      lookupColor(theme.colors, parts) ??
+      lookupColor(theme.borderColor, parts)
+    )
   }
 
   return (
@@ -118,17 +126,17 @@ function resolveThemeColor(input: string, theme: ColorTheme): string | undefined
  * - `[border-regular]` → the `regular` theme color
  * - `red` / `rgb(1,2,3)` → raw CSS colors
  */
-function resolveColor(input: string, theme: ColorTheme): string | undefined {
+function resolveColor(input: string, theme: ColorTheme, borderColors: unknown): string | undefined {
   const [raw, opacity] = splitOpacity(input)
 
   let resolved: string | undefined
   if (raw.startsWith('[') && raw.endsWith(']')) {
     const inner = raw.slice(1, -1)
     // Arbitrary values still resolve theme colors, e.g. `[primary]` → `#3b82f6`.
-    resolved = resolveThemeColor(inner, theme) ?? inner.replaceAll('_', ' ')
+    resolved = resolveThemeColor(inner, theme, borderColors) ?? inner.replaceAll('_', ' ')
   } else {
     resolved =
-      resolveThemeColor(raw, theme) ??
+      resolveThemeColor(raw, theme, borderColors) ??
       (namedColors.has(raw.toLowerCase()) || isColorFunction(raw) ? raw : undefined)
   }
 
@@ -154,24 +162,26 @@ function resolveColor(input: string, theme: ColorTheme): string | undefined {
  * b-1-primary/50       → 所有方向 1px solid color-mix(primary 50%, transparent)
  * b-t-1-[#fff]         → border-top: 1px solid #fff
  */
-export const borderRules: Rule[] = [
-  [
-    /^b-(?:(all|[trblxy])-)?(?:(solid|dashed|dotted|double)-)?(\d+)-(.+)$/,
-    ([, direction, style, width, color], { theme }) => {
-      if (!width || !color) return
-      const resolvedColor = resolveColor(color, theme as ColorTheme)
-      if (!resolvedColor) return
+export function createBorderRules(borderColors?: unknown): Rule[] {
+  return [
+    [
+      /^b-(?:(all|[trblxy])-)?(?:(solid|dashed|dotted|double)-)?(\d+)-(.+)$/,
+      ([, direction, style, width, color], { theme }) => {
+        if (!width || !color) return
+        const resolvedColor = resolveColor(color, theme as ColorTheme, borderColors)
+        if (!resolvedColor) return
 
-      const shorthand = `${width}px ${style ?? 'solid'} ${resolvedColor}`
-      const declarations: Record<string, string> = {}
-      if (!direction || direction === 'all') {
-        declarations.border = shorthand
-      } else {
-        for (const s of borderDirections[direction as BorderDirection]) {
-          declarations[`border-${s}`] = shorthand
+        const shorthand = `${width}px ${style ?? 'solid'} ${resolvedColor}`
+        const declarations: Record<string, string> = {}
+        if (!direction || direction === 'all') {
+          declarations.border = shorthand
+        } else {
+          for (const s of borderDirections[direction as BorderDirection]) {
+            declarations[`border-${s}`] = shorthand
+          }
         }
-      }
-      return declarations
-    },
-  ],
-]
+        return declarations
+      },
+    ],
+  ]
+}

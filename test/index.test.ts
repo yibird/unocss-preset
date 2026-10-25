@@ -535,4 +535,21 @@ describe('options', () => {
 
     expect(unprefixed).not.toContain('justify-content:space-between;')
   })
+
+  it('resolves border colors from options', async () => {
+    const css = await generate('b-1-[border-accent] b-t-1-accent', {
+      borderColors: { accent: 'rgb(var(--w-border-accent))' },
+    })
+
+    expect(css).toContain('border:1px solid rgb(var(--w-border-accent));')
+    expect(css).toContain('border-top:1px solid rgb(var(--w-border-accent));')
+  })
+
+  it('supports nested border color tokens from options', async () => {
+    const css = await generate('b-1-[border-accent-strong]', {
+      borderColors: { accent: { strong: '#123456' } },
+    })
+
+    expect(css).toContain('border:1px solid #123456;')
+  })
 })

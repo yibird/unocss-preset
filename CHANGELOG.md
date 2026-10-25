@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.4] - 2026-10-26
+
+### Added
+
+- `borderColors` preset option so border utilities can resolve tokens defined through custom UnoCSS rules
+
 ## [0.0.3] - 2026-10-25
 
 ### Changed
