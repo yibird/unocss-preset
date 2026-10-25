@@ -5,29 +5,31 @@
 Syntax:
 
 ```
-b-<direction>[-<style>][-<width>]-<color>
+b-[<direction>][-<style>]-<width>-<color>
 ```
 
-- Direction: `t` / `r` / `b` / `l` / `x` / `y`
+- Direction: `t` / `r` / `b` / `l` / `x` / `y` / `all`; `all` (or omitting it) applies every direction
 - Style: `solid` (default), `dashed`, `dotted`, `double`
-- Width: number in `px`, default `1`
+- Width: number in `px`, required
 - Color: theme color, CSS color or an arbitrary value; must come last
 
 Colors are resolved from the UnoCSS theme and also support opacity and
 arbitrary values:
 
-| Syntax           | Output                                           |
-| ---------------- | ------------------------------------------------ |
-| `b-t-blue-500`   | `blue.500` from the theme                        |
-| `b-t-primary/50` | `color-mix(in srgb, <primary> 50%, transparent)` |
-| `b-t-[#fff]`     | `border-color: #fff`                             |
-| `b-t-rgb(1,2,3)` | `border-color: rgb(1,2,3)`                       |
+| Syntax             | Output                                           |
+| ------------------ | ------------------------------------------------ |
+| `b-t-1-blue-500`   | `blue.500` from the theme                        |
+| `b-t-1-primary/50` | `color-mix(in srgb, <primary> 50%, transparent)` |
+| `b-t-1-[primary]`  | theme color `primary` (brackets are theme-aware) |
+| `b-t-1-[#fff]`     | `border-color: #fff`                             |
+| `b-t-1-rgb(1,2,3)` | `border-color: rgb(1,2,3)`                       |
 
 | Utility                | Output                                     |
 | ---------------------- | ------------------------------------------ |
-| `b-t-primary`          | `border-top: 1px solid primary`            |
-| `b-t-dashed-primary`   | `border-top: 1px dashed primary`           |
-| `b-r-dotted-blue`      | `border-right: 1px dotted blue`            |
+| `b-1-primary`          | all directions, 1px solid primary          |
+| `b-all-1-primary`      | all directions, 1px solid primary          |
+| `b-t-1-primary`        | `border-top: 1px solid primary`            |
+| `b-t-dashed-1-primary` | `border-top: 1px dashed primary`           |
 | `b-b-dashed-2-red`     | `border-bottom: 2px dashed red`            |
 | `b-l-2-red`            | `border-left: 2px solid red`               |
 | `b-x-dotted-3-primary` | left and right borders, 3px dotted primary |
@@ -55,6 +57,25 @@ Borders also work with variants. Hover or focus this button:
 <button class="hocus:b-t-4-primary hocus:text-primary px-4 py-2 mt-3 rounded b-1 text-sm transition-colors">
   hocus:b-t-4-primary
 </button>
+
+## Shadow
+
+Syntax:
+
+```
+shadow-[<direction>][-<size>]
+```
+
+- Direction: `t` / `r` / `b` / `l` / `all`; defaults to `all`
+- Size: `sm` / `md` / `lg` / `xl` / `2xl`; defaults to the base size
+
+| Utility          | Output                                                 |
+| ---------------- | ------------------------------------------------------ |
+| `shadow-t`       | top shadow with the base size                          |
+| `shadow-b-md`    | bottom shadow, `0 4px 6px -1px rgba(0,0,0,.1)`         |
+| `shadow-r-xl`    | right shadow, `20px 0 25px -5px rgba(0,0,0,.1)`        |
+| `shadow-all-2xl` | shadow on every side, `0 0 50px -12px rgba(0,0,0,.25)` |
+| `shadow-md`      | same as `shadow-all-md`, `0 0 6px -1px`                |
 
 ## Text size
 

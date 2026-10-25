@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2026-10-25
+
+### Added
+
+- Border `all` direction (`b-all-*`) and an all-directions fallback when the direction is omitted
+- Theme color resolution inside arbitrary values, for example `b-1-[primary]`
+- Directional shadow rules: `shadow-<direction>[-<size>]` with `sm`/`md`/`lg`/`xl`/`2xl`
+- Shadow direction is optional and defaults to `all`, for example `shadow-md`
+- Border and shadow rule test coverage
+
+### Changed
+
+- **Breaking**: the border syntax is now `b-[direction][-style]-width-color`; width is required and the implicit `1px` default was removed
+- Shadow size scale aligned with Tailwind (`md`, `lg`, `xl`, `2xl`)
+
+### Fixed
+
+- Opacity modifiers on arbitrary values containing slashes, for example `b-1-[rgb(1_2_3_/_50%)]`
+- Empty and negative opacity values are rejected, while leading-dot percentages are accepted
+- Unknown plain-word border colors no longer emit invalid CSS
+- Shadow `2xl` no longer collapses because its blur was smaller than the negative spread
+
+## [0.0.1] - 2026-10-23
+
 ### Added
 
 - Border rules: `b-<direction>[-<style>][-<width>]-<color>`

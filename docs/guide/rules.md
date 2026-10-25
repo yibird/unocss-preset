@@ -5,28 +5,30 @@
 格式：
 
 ```
-b-<方向>[-<样式>][-<宽度>]-<颜色>
+b-[<方向>][-<样式>]-<宽度>-<颜色>
 ```
 
-- 方向：`t` / `r` / `b` / `l` / `x` / `y`
+- 方向：`t` / `r` / `b` / `l` / `x` / `y` / `all`，不写时等同于 `all`，生成所有方向
 - 样式：`solid`（默认）、`dashed`、`dotted`、`double`
-- 宽度：单位 `px` 的数字，默认 `1`
+- 宽度：单位 `px` 的数字，必须写
 - 颜色：主题色、CSS 颜色或任意值，必须放在最后
 
 颜色会从 UnoCSS 主题中解析，也支持透明度和任意值：
 
-| 写法             | 输出                                             |
-| ---------------- | ------------------------------------------------ |
-| `b-t-blue-500`   | 主题中 `blue.500` 的颜色                         |
-| `b-t-primary/50` | `color-mix(in srgb, <primary> 50%, transparent)` |
-| `b-t-[#fff]`     | `border-color: #fff`                             |
-| `b-t-rgb(1,2,3)` | `border-color: rgb(1,2,3)`                       |
+| 写法               | 输出                                             |
+| ------------------ | ------------------------------------------------ |
+| `b-t-1-blue-500`   | 主题中 `blue.500` 的颜色                         |
+| `b-t-1-primary/50` | `color-mix(in srgb, <primary> 50%, transparent)` |
+| `b-t-1-[primary]`  | 主题色 `primary`（括号内同样会解析主题）         |
+| `b-t-1-[#fff]`     | `border-color: #fff`                             |
+| `b-t-1-rgb(1,2,3)` | `border-color: rgb(1,2,3)`                       |
 
 | 工具类                 | 输出                             |
 | ---------------------- | -------------------------------- |
-| `b-t-primary`          | `border-top: 1px solid primary`  |
-| `b-t-dashed-primary`   | `border-top: 1px dashed primary` |
-| `b-r-dotted-blue`      | `border-right: 1px dotted blue`  |
+| `b-1-primary`          | 所有方向，1px solid primary      |
+| `b-all-1-primary`      | 所有方向，1px solid primary      |
+| `b-t-1-primary`        | `border-top: 1px solid primary`  |
+| `b-t-dashed-1-primary` | `border-top: 1px dashed primary` |
 | `b-b-dashed-2-red`     | `border-bottom: 2px dashed red`  |
 | `b-l-2-red`            | `border-left: 2px solid red`     |
 | `b-x-dotted-3-primary` | 左右边框，3px dotted primary     |
@@ -54,6 +56,25 @@ b-<方向>[-<样式>][-<宽度>]-<颜色>
 <button class="hocus:b-t-4-primary hocus:text-primary px-4 py-2 mt-3 rounded b-1 text-sm transition-colors">
   hocus:b-t-4-primary
 </button>
+
+## 阴影
+
+格式：
+
+```
+shadow-[<方向>][-<尺寸>]
+```
+
+- 方向：`t` / `r` / `b` / `l` / `all`，不写时等同于 `all`
+- 尺寸：`sm` / `md` / `lg` / `xl` / `2xl`，不写时使用默认尺寸
+
+| 工具类           | 输出                                        |
+| ---------------- | ------------------------------------------- |
+| `shadow-t`       | 顶部阴影，默认尺寸                          |
+| `shadow-b-md`    | 底部阴影，`0 4px 6px -1px rgba(0,0,0,.1)`   |
+| `shadow-r-xl`    | 右侧阴影，`20px 0 25px -5px rgba(0,0,0,.1)` |
+| `shadow-all-2xl` | 四周阴影，`0 0 50px -12px rgba(0,0,0,.25)`  |
+| `shadow-md`      | 等同于 `shadow-all-md`，四周 `0 0 6px -1px` |
 
 ## 字号
 
