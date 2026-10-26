@@ -3,6 +3,8 @@ import { elements } from './element'
 import { layouts } from './layout'
 import { motions } from './motion'
 import { effects } from './effect'
+import { texts } from './text'
+import { layers } from './layer'
 
 export const shortcuts = {
   ...sizes,
@@ -10,4 +12,6 @@ export const shortcuts = {
   ...layouts,
   ...motions,
   ...effects,
+  ...texts,
+  ...layers,
 }

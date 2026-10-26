@@ -84,44 +84,6 @@ Borders also work with variants. Hover or focus this button:
   hocus:b-t-4-primary
 </button>
 
-## Shadow
-
-Syntax:
-
-```
-shadow-[<direction>][-<size>]
-```
-
-- Direction: `t` / `r` / `b` / `l` / `all`; defaults to `all`
-- Size: `sm` / `md` / `lg` / `xl` / `2xl`; defaults to the base size
-
-| Utility          | Output                                  |
-| ---------------- | --------------------------------------- |
-| `shadow-t`       | `0 -1px 3px 0 rgba(0,0,0,.1)`           |
-| `shadow-t-sm`    | `0 -1px 2px 0 rgba(0,0,0,.05)`          |
-| `shadow-r-md`    | `4px 0 6px -1px rgba(0,0,0,.1)`         |
-| `shadow-b-lg`    | `0 10px 15px -3px rgba(0,0,0,.1)`       |
-| `shadow-l-xl`    | `-20px 0 25px -5px rgba(0,0,0,.1)`      |
-| `shadow-b-md`    | `0 4px 6px -1px rgba(0,0,0,.1)`         |
-| `shadow-r-xl`    | `20px 0 25px -5px rgba(0,0,0,.1)`       |
-| `shadow-all-2xl` | `0 0 50px -12px rgba(0,0,0,.25)`        |
-| `shadow-md`      | same as `shadow-all-md`, `0 0 6px -1px` |
-
-### Result
-
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4 p-4 text-sm">
-  <div class="shadow-t-md p-4 rounded bg-white b-1">shadow-t-md</div>
-  <div class="shadow-r-md p-4 rounded bg-white b-1">shadow-r-md</div>
-  <div class="shadow-b-lg p-4 rounded bg-white b-1">shadow-b-lg</div>
-  <div class="shadow-l-xl p-4 rounded bg-white b-1">shadow-l-xl</div>
-  <div class="shadow-md p-4 rounded bg-white b-1">shadow-md</div>
-  <div class="shadow-all-2xl p-4 rounded bg-white b-1">shadow-all-2xl</div>
-</div>
-
-> This preset is registered after presetWind4, so standard names such as
-> `shadow-md` are handled by this rule and emit the single shadow above instead
-> of presetWind4's layered shadow.
-
 ## Text size
 
 Text-size rules emit both `font-size` and `line-height`:

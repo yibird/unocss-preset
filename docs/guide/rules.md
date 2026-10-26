@@ -81,43 +81,6 @@ b-[<方向>][-<样式>]-<宽度>-<颜色>
   hocus:b-t-4-primary
 </button>
 
-## 阴影
-
-格式：
-
-```
-shadow-[<方向>][-<尺寸>]
-```
-
-- 方向：`t` / `r` / `b` / `l` / `all`，不写时等同于 `all`
-- 尺寸：`sm` / `md` / `lg` / `xl` / `2xl`，不写时使用默认尺寸
-
-| 工具类           | 输出                                   |
-| ---------------- | -------------------------------------- |
-| `shadow-t`       | `0 -1px 3px 0 rgba(0,0,0,.1)`          |
-| `shadow-t-sm`    | `0 -1px 2px 0 rgba(0,0,0,.05)`         |
-| `shadow-r-md`    | `4px 0 6px -1px rgba(0,0,0,.1)`        |
-| `shadow-b-lg`    | `0 10px 15px -3px rgba(0,0,0,.1)`      |
-| `shadow-l-xl`    | `-20px 0 25px -5px rgba(0,0,0,.1)`     |
-| `shadow-b-md`    | `0 4px 6px -1px rgba(0,0,0,.1)`        |
-| `shadow-r-xl`    | `20px 0 25px -5px rgba(0,0,0,.1)`      |
-| `shadow-all-2xl` | `0 0 50px -12px rgba(0,0,0,.25)`       |
-| `shadow-md`      | 等同于 `shadow-all-md`，`0 0 6px -1px` |
-
-### 效果
-
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4 p-4 text-sm">
-  <div class="shadow-t-md p-4 rounded bg-white b-1">shadow-t-md</div>
-  <div class="shadow-r-md p-4 rounded bg-white b-1">shadow-r-md</div>
-  <div class="shadow-b-lg p-4 rounded bg-white b-1">shadow-b-lg</div>
-  <div class="shadow-l-xl p-4 rounded bg-white b-1">shadow-l-xl</div>
-  <div class="shadow-md p-4 rounded bg-white b-1">shadow-md</div>
-  <div class="shadow-all-2xl p-4 rounded bg-white b-1">shadow-all-2xl</div>
-</div>
-
-> 本 preset 在 presetWind4 之后注册，因此 `shadow-md` 等标准名称会由本规则接管，
-> 输出上面的单层阴影，而不是 presetWind4 的多层阴影。
-
 ## 字号
 
 字号规则同时输出 `font-size` 与 `line-height`：

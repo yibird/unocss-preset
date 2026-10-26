@@ -115,27 +115,87 @@
 
 ### Flex
 
-| 快捷方式              | 展开                                |
-| --------------------- | ----------------------------------- |
-| `flex-center`         | `flex justify-center items-center`  |
-| `flex-x-center`       | `flex justify-center`               |
-| `flex-y-center`       | `flex items-center`                 |
-| `flex-between`        | `flex justify-between`              |
-| `flex-between-center` | `flex justify-between items-center` |
-| `flex-center-between` | `flex justify-center items-stretch` |
+#### 居中与主轴对齐
 
-### 效果
+| 快捷方式        | 展开                               |
+| --------------- | ---------------------------------- |
+| `flex-center`   | `flex justify-center items-center` |
+| `flex-x-center` | `flex justify-center`              |
+| `flex-y-center` | `flex items-center`                |
+| `flex-start`    | `flex justify-start`               |
+| `flex-end`      | `flex justify-end`                 |
+| `flex-between`  | `flex justify-between`             |
+| `flex-around`   | `flex justify-around`              |
+| `flex-evenly`   | `flex justify-evenly`              |
+
+#### 效果
 
 <div class="grid gap-2 mt-4 text-xs">
-  <div class="flex-center gap-2 h-14 b-1 rounded"><span class="px-2 py-1 bg-primary/10 rounded">flex-center</span></div>
-  <div class="flex-x-center gap-2 h-14 b-1 rounded"><span class="px-2 py-1 bg-primary/10 rounded">flex-x-center</span></div>
-  <div class="flex-y-center gap-2 h-14 b-1 rounded"><span class="px-2 py-1 bg-primary/10 rounded">flex-y-center</span><span class="px-2 py-1 bg-primary/10 rounded self-start">顶部对齐</span></div>
-  <div class="flex-between h-14 b-1 rounded p-2"><span class="px-2 py-1 bg-primary/10 rounded">flex-between</span><span class="px-2 py-1 bg-primary/10 rounded">右侧</span></div>
-  <div class="flex-between-center h-14 b-1 rounded p-2"><span class="px-2 py-1 bg-primary/10 rounded">flex-between-center</span><span class="px-2 py-1 bg-primary/10 rounded">右侧</span></div>
-  <div class="flex-center-between h-14 b-1 rounded p-2"><span class="px-2 py-1 bg-primary/10 rounded">flex-center-between</span><span class="px-2 py-1 bg-primary/10 rounded">stretch</span></div>
+  <div class="flex-center h-12 b-1 rounded"><span class="px-2 py-1 bg-primary/10 rounded">flex-center</span></div>
+  <div class="flex-between h-12 b-1 rounded p-2"><span class="px-2 py-1 bg-primary/10 rounded">flex-between</span><span class="px-2 py-1 bg-primary/10 rounded">右侧</span></div>
+  <div class="flex-around h-12 b-1 rounded p-2"><span class="px-2 py-1 bg-primary/10 rounded">1</span><span class="px-2 py-1 bg-primary/10 rounded">2</span><span class="px-2 py-1 bg-primary/10 rounded">3</span></div>
+  <div class="flex-evenly h-12 b-1 rounded p-2"><span class="px-2 py-1 bg-primary/10 rounded">1</span><span class="px-2 py-1 bg-primary/10 rounded">2</span><span class="px-2 py-1 bg-primary/10 rounded">3</span></div>
+</div>
+
+#### 交叉轴对齐
+
+| 快捷方式              | 展开                  |
+| --------------------- | --------------------- |
+| `flex-items-start`    | `flex items-start`    |
+| `flex-items-end`      | `flex items-end`      |
+| `flex-items-center`   | `flex items-center`   |
+| `flex-items-baseline` | `flex items-baseline` |
+| `flex-items-stretch`  | `flex items-stretch`  |
+
+#### 效果
+
+<div class="grid gap-2 mt-4 text-xs">
+  <div class="flex-items-start gap-2 h-14 b-1 rounded p-2"><span class="bg-primary/10 px-2 py-1 rounded">start</span><span class="bg-primary/10 px-2 py-3 rounded">start</span></div>
+  <div class="flex-items-center gap-2 h-14 b-1 rounded p-2"><span class="bg-primary/10 px-2 py-1 rounded">center</span><span class="bg-primary/10 px-2 py-3 rounded">center</span></div>
+  <div class="flex-items-baseline gap-2 h-14 b-1 rounded p-2"><span class="bg-primary/10 px-2 py-1 rounded text-lg">baseline</span><span class="bg-primary/10 px-2 py-1 rounded">baseline</span></div>
+</div>
+
+#### 组合对齐
+
+| 快捷方式              | 展开                                |
+| --------------------- | ----------------------------------- |
+| `flex-between-center` | `flex justify-between items-center` |
+| `flex-start-center`   | `flex justify-start items-center`   |
+| `flex-end-center`     | `flex justify-end items-center`     |
+| `flex-center-start`   | `flex justify-center items-start`   |
+| `flex-center-end`     | `flex justify-center items-end`     |
+| `flex-center-stretch` | `flex justify-center items-stretch` |
+
+#### 效果
+
+<div class="grid gap-2 mt-4 text-xs">
+  <div class="flex-between-center h-14 b-1 rounded p-2"><span class="bg-primary/10 px-2 py-1 rounded">between-center</span><span class="bg-primary/10 px-2 py-1 rounded">右侧</span></div>
+  <div class="flex-start-center gap-2 h-14 b-1 rounded p-2"><span class="bg-primary/10 px-2 py-1 rounded">start-center</span><span class="bg-primary/10 px-2 py-1 rounded">2</span></div>
+  <div class="flex-center-end h-14 b-1 rounded p-2"><span class="bg-primary/10 px-2 py-1 rounded">center-end</span></div>
+</div>
+
+#### 纵向布局
+
+| 快捷方式                  | 展开                                         |
+| ------------------------- | -------------------------------------------- |
+| `flex-col-center`         | `flex flex-col items-center`                 |
+| `flex-col-start`          | `flex flex-col items-start`                  |
+| `flex-col-end`            | `flex flex-col items-end`                    |
+| `flex-col-between`        | `flex flex-col justify-between`              |
+| `flex-col-between-center` | `flex flex-col justify-between items-center` |
+| `flex-col-center-center`  | `flex flex-col justify-center items-center`  |
+
+#### 效果
+
+<div class="grid grid-cols-3 gap-2 mt-4 text-xs">
+  <div class="flex-col-center h-24 b-1 rounded p-2"><span class="bg-primary/10 px-2 py-1 rounded">center</span></div>
+  <div class="flex-col-between h-24 b-1 rounded p-2"><span class="bg-primary/10 px-2 py-1 rounded">1</span><span class="bg-primary/10 px-2 py-1 rounded">2</span></div>
+  <div class="flex-col-start h-24 b-1 rounded p-2"><span class="bg-primary/10 px-2 py-1 rounded">start</span></div>
 </div>
 
 ### Grid
+
+#### 容器对齐
 
 | 快捷方式              | 展开                                              |
 | --------------------- | ------------------------------------------------- |
@@ -148,20 +208,69 @@
 | `grid-center-between` | `grid place-content-between`                      |
 | `grid-equal-cols`     | `grid grid-cols-[repeat(auto-fit,minmax(0,1fr))]` |
 
-### 效果
+#### 效果
 
 <div class="grid gap-2 mt-4 text-xs">
-  <div class="grid-center grid-flow-col gap-1 h-16 b-1 rounded"><span class="px-2 bg-primary/10 rounded">1</span><span class="px-2 bg-primary/10 rounded">2</span></div>
-  <div class="grid-x-center grid-flow-col gap-1 h-16 b-1 rounded"><span class="px-2 bg-primary/10 rounded">1</span><span class="px-2 bg-primary/10 rounded">2</span></div>
-  <div class="grid-y-center grid-flow-col gap-1 h-16 b-1 rounded"><span class="px-2 bg-primary/10 rounded">1</span><span class="px-2 bg-primary/10 rounded">2</span></div>
-  <div class="grid-stretch grid-flow-col gap-1 h-16 b-1 rounded"><span class="bg-primary/10">1</span><span class="bg-primary/10">2</span></div>
-  <div class="grid-between grid-flow-col gap-1 h-16 b-1 rounded p-2"><span class="px-2 bg-primary/10 rounded">1</span><span class="px-2 bg-primary/10 rounded">2</span><span class="px-2 bg-primary/10 rounded">3</span></div>
-  <div class="grid-between-center grid-flow-col gap-1 h-16 b-1 rounded p-2"><span class="px-2 bg-primary/10 rounded">1</span><span class="px-2 bg-primary/10 rounded">2</span><span class="px-2 bg-primary/10 rounded">3</span></div>
-  <div class="grid-center-between grid-flow-col gap-1 h-16 b-1 rounded p-2"><span class="px-2 bg-primary/10 rounded">1</span><span class="px-2 bg-primary/10 rounded">2</span><span class="px-2 bg-primary/10 rounded">3</span></div>
-  <div class="grid-equal-cols gap-1"><div class="b-1 p-2 text-center">1</div><div class="b-1 p-2 text-center">2</div><div class="b-1 p-2 text-center">3</div></div>
+  <div class="grid-center h-20 b-1 rounded"><span class="bg-primary/10 px-2 py-1 rounded">grid-center</span></div>
+  <div class="grid-between grid-flow-col h-16 b-1 rounded p-2"><span class="bg-primary/10 px-2 py-1 rounded">1</span><span class="bg-primary/10 px-2 py-1 rounded">2</span><span class="bg-primary/10 px-2 py-1 rounded">3</span></div>
+  <div class="grid-equal-cols gap-2"><span class="b-1 p-2 text-center">equal</span><span class="b-1 p-2 text-center">equal</span><span class="b-1 p-2 text-center">equal</span></div>
 </div>
 
-### 定位居中
+#### 网格项对齐
+
+| 快捷方式            | 展开                      |
+| ------------------- | ------------------------- |
+| `grid-items-center` | `grid place-items-center` |
+| `grid-items-start`  | `grid place-items-start`  |
+| `grid-items-end`    | `grid place-items-end`    |
+
+#### 效果
+
+<div class="grid gap-2 mt-4 text-xs">
+  <div class="grid-items-start grid-3-cols h-20 b-1 rounded gap-2 p-2"><span class="bg-primary/10 px-2 py-1 rounded">start</span><span class="bg-primary/10 px-2 py-1 rounded">start</span><span class="bg-primary/10 px-2 py-1 rounded">start</span></div>
+  <div class="grid-items-center grid-3-cols h-20 b-1 rounded gap-2 p-2"><span class="bg-primary/10 px-2 py-1 rounded">center</span><span class="bg-primary/10 px-2 py-1 rounded">center</span><span class="bg-primary/10 px-2 py-1 rounded">center</span></div>
+  <div class="grid-items-end grid-3-cols h-20 b-1 rounded gap-2 p-2"><span class="bg-primary/10 px-2 py-1 rounded">end</span><span class="bg-primary/10 px-2 py-1 rounded">end</span><span class="bg-primary/10 px-2 py-1 rounded">end</span></div>
+</div>
+
+#### 自适应列
+
+| 快捷方式           | 展开                                                  |
+| ------------------ | ----------------------------------------------------- |
+| `grid-auto-cols`   | `grid grid-flow-col auto-cols-fr`                     |
+| `grid-auto-rows`   | `grid grid-flow-row auto-rows-fr`                     |
+| `grid-cols-fit-sm` | `grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))]` |
+| `grid-cols-fit-md` | `grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]` |
+| `grid-cols-fit-lg` | `grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))]` |
+
+#### 效果
+
+<div class="grid gap-2 mt-4 text-xs">
+  <div class="grid-cols-fit-sm gap-2"><span class="b-1 p-2">fit-sm</span><span class="b-1 p-2">fit-sm</span></div>
+  <div class="grid-cols-fit-md gap-2"><span class="b-1 p-2">fit-md</span><span class="b-1 p-2">fit-md</span></div>
+  <div class="grid-cols-fit-lg gap-2"><span class="b-1 p-2">fit-lg</span><span class="b-1 p-2">fit-lg</span></div>
+  <div class="grid-auto-cols gap-2 h-16"><span class="bg-primary/10 p-2 rounded">auto-cols</span><span class="bg-primary/10 p-2 rounded">auto-cols</span></div>
+</div>
+
+#### 固定列
+
+| 快捷方式      | 展开               |
+| ------------- | ------------------ |
+| `grid-2-cols` | `grid grid-cols-2` |
+| `grid-3-cols` | `grid grid-cols-3` |
+| `grid-4-cols` | `grid grid-cols-4` |
+| `grid-full`   | `grid grid-cols-1` |
+
+#### 效果
+
+<div class="grid gap-2 mt-4 text-xs">
+  <div class="grid-2-cols gap-2"><span class="b-1 p-2 text-center">1</span><span class="b-1 p-2 text-center">2</span></div>
+  <div class="grid-3-cols gap-2"><span class="b-1 p-2 text-center">1</span><span class="b-1 p-2 text-center">2</span><span class="b-1 p-2 text-center">3</span></div>
+  <div class="grid-4-cols gap-2"><span class="b-1 p-2 text-center">1</span><span class="b-1 p-2 text-center">2</span><span class="b-1 p-2 text-center">3</span><span class="b-1 p-2 text-center">4</span></div>
+</div>
+
+### 定位
+
+#### 居中
 
 | 快捷方式            | 展开                   |
 | ------------------- | ---------------------- |
@@ -172,15 +281,75 @@
 | `fixed-x-center`    | 固定定位，水平居中     |
 | `fixed-y-center`    | 固定定位，垂直居中     |
 
-### 效果
+#### 效果
 
 <div class="grid sm:grid-cols-2 gap-2 mt-4 text-xs">
-  <div class="relative h-20 b-1 rounded"><span class="absolute-center bg-primary text-white px-2 py-1 rounded">absolute-center</span></div>
-  <div class="relative h-20 b-1 rounded"><span class="absolute-x-center bg-primary text-white px-2 py-1 rounded top-1">absolute-x-center</span></div>
-  <div class="relative h-20 b-1 rounded"><span class="absolute-y-center bg-primary text-white px-2 py-1 rounded left-1">absolute-y-center</span></div>
-  <div class="relative h-20 b-1 rounded [transform:translateZ(0)] overflow-hidden"><span class="fixed-center bg-primary text-white px-2 py-1 rounded">fixed-center</span></div>
-  <div class="relative h-20 b-1 rounded [transform:translateZ(0)] overflow-hidden"><span class="fixed-x-center bg-primary text-white px-2 py-1 rounded top-1">fixed-x-center</span></div>
-  <div class="relative h-20 b-1 rounded [transform:translateZ(0)] overflow-hidden"><span class="fixed-y-center bg-primary text-white px-2 py-1 rounded left-1">fixed-y-center</span></div>
+  <div class="relative h-24 b-1 rounded"><span class="absolute-center bg-primary text-white px-2 py-1 rounded">absolute-center</span></div>
+  <div class="relative h-24 b-1 rounded"><span class="absolute-x-center bg-primary text-white px-2 py-1 rounded top-1">absolute-x-center</span></div>
+  <div class="relative h-24 b-1 rounded"><span class="absolute-y-center bg-primary text-white px-2 py-1 rounded left-1">absolute-y-center</span></div>
+  <div class="relative h-24 b-1 rounded overflow-hidden [transform:translateZ(0)]"><span class="fixed-center bg-primary text-white px-2 py-1 rounded">fixed-center</span></div>
+</div>
+
+#### 四角定位
+
+| 快捷方式                | 展开                        |
+| ----------------------- | --------------------------- |
+| `absolute-top-left`     | `absolute top-0 left-0`     |
+| `absolute-top-right`    | `absolute top-0 right-0`    |
+| `absolute-bottom-left`  | `absolute bottom-0 left-0`  |
+| `absolute-bottom-right` | `absolute bottom-0 right-0` |
+| `fixed-top-left`        | `fixed top-0 left-0`        |
+| `fixed-top-right`       | `fixed top-0 right-0`       |
+| `fixed-bottom-left`     | `fixed bottom-0 left-0`     |
+| `fixed-bottom-right`    | `fixed bottom-0 right-0`    |
+
+#### 效果
+
+<div class="relative h-24 b-1 rounded mt-4 text-xs">
+  <span class="absolute-top-left bg-primary text-white px-2 py-1 rounded">TL</span>
+  <span class="absolute-top-right bg-primary text-white px-2 py-1 rounded">TR</span>
+  <span class="absolute-bottom-left bg-primary text-white px-2 py-1 rounded">BL</span>
+  <span class="absolute-bottom-right bg-primary text-white px-2 py-1 rounded">BR</span>
+</div>
+
+#### 边缘居中
+
+| 快捷方式                 | 展开                                          |
+| ------------------------ | --------------------------------------------- |
+| `absolute-top-center`    | `absolute top-0 left-1/2 -translate-x-1/2`    |
+| `absolute-bottom-center` | `absolute bottom-0 left-1/2 -translate-x-1/2` |
+| `absolute-left-center`   | `absolute left-0 top-1/2 -translate-y-1/2`    |
+| `absolute-right-center`  | `absolute right-0 top-1/2 -translate-y-1/2`   |
+| `fixed-top-center`       | `fixed top-0 left-1/2 -translate-x-1/2`       |
+| `fixed-bottom-center`    | `fixed bottom-0 left-1/2 -translate-x-1/2`    |
+| `fixed-left-center`      | `fixed left-0 top-1/2 -translate-y-1/2`       |
+| `fixed-right-center`     | `fixed right-0 top-1/2 -translate-y-1/2`      |
+
+#### 效果
+
+<div class="relative h-24 b-1 rounded mt-4 text-xs">
+  <span class="absolute-top-center bg-primary text-white px-2 py-1 rounded">TC</span>
+  <span class="absolute-bottom-center bg-primary text-white px-2 py-1 rounded">BC</span>
+  <span class="absolute-left-center bg-primary text-white px-2 py-1 rounded">LC</span>
+  <span class="absolute-right-center bg-primary text-white px-2 py-1 rounded">RC</span>
+</div>
+
+#### 铺满容器
+
+| 快捷方式        | 展开               |
+| --------------- | ------------------ |
+| `absolute-fill` | `absolute inset-0` |
+| `fixed-fill`    | `fixed inset-0`    |
+
+#### 效果
+
+<div class="grid sm:grid-cols-2 gap-2 mt-4 text-xs">
+  <div class="relative h-24 b-1 rounded overflow-hidden">
+    <div class="absolute-fill bg-primary/20 flex-center text-primary">absolute-fill</div>
+  </div>
+  <div class="relative h-24 b-1 rounded overflow-hidden [transform:translateZ(0)]">
+    <div class="fixed-fill bg-primary/20 flex-center text-primary">fixed-fill</div>
+  </div>
 </div>
 
 ## 动效
@@ -244,3 +413,42 @@
   <div class="effect-skeleton h-12 w-24"></div>
   <div class="effect-skeleton h-12 w-24"></div>
 </div>
+
+## 文本
+
+| 快捷方式       | 展开                     |
+| -------------- | ------------------------ |
+| `text-clamp-2` | 两行截断，超出显示省略号 |
+| `text-clamp-3` | 三行截断                 |
+| `text-clamp-4` | 四行截断                 |
+| `text-clamp-5` | 五行截断                 |
+
+### 效果
+
+<div class="grid gap-3 mt-4 text-sm">
+  <div class="text-clamp-2 w-72 bg-gray-50 b-1 rounded p-2">这是一段用于演示文本截断的长文本。超出指定行数后会被隐藏并显示省略号，适合卡片标题、列表摘要等场景。UnoCSS 的 line-clamp 会在指定行数后截断内容，不同档位应该呈现出明显的行数差异。为了确保每一档都能看到截断效果，这里故意放入了足够多的文字内容，方便对比 text-clamp-2、text-clamp-3、text-clamp-4 和 text-clamp-5 的实际表现。</div>
+  <div class="text-clamp-3 w-72 bg-gray-50 b-1 rounded p-2">这是一段用于演示文本截断的长文本。超出指定行数后会被隐藏并显示省略号，适合卡片标题、列表摘要等场景。UnoCSS 的 line-clamp 会在指定行数后截断内容，不同档位应该呈现出明显的行数差异。为了确保每一档都能看到截断效果，这里故意放入了足够多的文字内容，方便对比 text-clamp-2、text-clamp-3、text-clamp-4 和 text-clamp-5 的实际表现。</div>
+  <div class="text-clamp-4 w-72 bg-gray-50 b-1 rounded p-2">这是一段用于演示文本截断的长文本。超出指定行数后会被隐藏并显示省略号，适合卡片标题、列表摘要等场景。UnoCSS 的 line-clamp 会在指定行数后截断内容，不同档位应该呈现出明显的行数差异。为了确保每一档都能看到截断效果，这里故意放入了足够多的文字内容，方便对比 text-clamp-2、text-clamp-3、text-clamp-4 和 text-clamp-5 的实际表现。</div>
+  <div class="text-clamp-5 w-72 bg-gray-50 b-1 rounded p-2">这是一段用于演示文本截断的长文本。超出指定行数后会被隐藏并显示省略号，适合卡片标题、列表摘要等场景。UnoCSS 的 line-clamp 会在指定行数后截断内容，不同档位应该呈现出明显的行数差异。为了确保每一档都能看到截断效果，这里故意放入了足够多的文字内容，方便对比 text-clamp-2、text-clamp-3、text-clamp-4 和 text-clamp-5 的实际表现。</div>
+</div>
+
+## 层级
+
+| 快捷方式         | 展开                 |
+| ---------------- | -------------------- |
+| `layer-base`     | `relative z-0`       |
+| `layer-dropdown` | `relative z-10`      |
+| `layer-sticky`   | `sticky z-20`        |
+| `layer-overlay`  | `fixed inset-0 z-30` |
+| `layer-modal`    | `fixed inset-0 z-40` |
+| `layer-tooltip`  | `fixed z-50`         |
+
+```html
+<header class="layer-sticky">...</header>
+<aside class="layer-modal">...</aside>
+<div class="layer-tooltip">...</div>
+```
+
+::: warning
+`layer-overlay`、`layer-modal`、`layer-tooltip` 使用 `fixed`，直接渲染会覆盖整个文档页，因此这里只提供用法示例。
+:::

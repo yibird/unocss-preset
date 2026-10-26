@@ -113,11 +113,13 @@ presetUnocss({ prefix: 'u-' })
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 尺寸     | `full`、`min-full`、`max-full`、`full-flex`                                                                                                                                |
 | 元素     | `button`、`reset-button`、`block-button`、`link`、`img-cover`、`img-contain`、`avatar`、`clickable`、`overlay`、`overlay-full`                                             |
-| Flex     | `flex-center`、`flex-x-center`、`flex-y-center`、`flex-between`、`flex-between-center`、`flex-center-between`                                                              |
-| Grid     | `grid-center`、`grid-x-center`、`grid-y-center`、`grid-stretch`、`grid-between`、`grid-between-center`、`grid-center-between`、`grid-equal-cols`                           |
-| 定位     | `absolute-center`、`absolute-x-center`、`absolute-y-center`、`fixed-center`、`fixed-x-center`、`fixed-y-center`                                                            |
+| Flex     | `flex-center`、`flex-between`、`flex-around`、`flex-items-*`、`flex-col-*` 等 23 个                                                                                        |
+| Grid     | `grid-equal-cols`、`grid-items-*`、`grid-auto-*`、`grid-cols-fit-*`、`grid-2/3/4-cols` 等 20 个                                                                            |
+| 定位     | `absolute-*`、`fixed-*`：居中、四角、边缘居中、铺满，共 24 个                                                                                                              |
 | 动效     | `motion-press`、`motion-float`、`motion-scale`、`motion-shrink`、`motion-rotate`、`motion-fade`                                                                            |
 | 交互反馈 | `effect-selected`、`effect-focus`、`effect-interactive`、`effect-outline-ring`、`effect-disabled`、`effect-skeleton`、`effect-shadow`、`effect-border`、`effect-highlight` |
+| 文本     | `text-clamp-2`、`text-clamp-3`、`text-clamp-4`、`text-clamp-5`                                                                                                             |
+| 层级     | `layer-base`、`layer-dropdown`、`layer-sticky`、`layer-overlay`、`layer-modal`、`layer-tooltip`                                                                            |
 
 部分快捷方式依赖主题中的 `primary` 颜色。展开细节见[快捷方式文档](./docs/guide/shortcuts.md)。
 

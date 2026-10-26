@@ -118,11 +118,13 @@ Each utility sets both `font-size` and `line-height`; see the
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Size        | `full`, `min-full`, `max-full`, `full-flex`                                                                                                                                |
 | Element     | `button`, `reset-button`, `block-button`, `link`, `img-cover`, `img-contain`, `avatar`, `clickable`, `overlay`, `overlay-full`                                             |
-| Flex        | `flex-center`, `flex-x-center`, `flex-y-center`, `flex-between`, `flex-between-center`, `flex-center-between`                                                              |
-| Grid        | `grid-center`, `grid-x-center`, `grid-y-center`, `grid-stretch`, `grid-between`, `grid-between-center`, `grid-center-between`, `grid-equal-cols`                           |
-| Position    | `absolute-center`, `absolute-x-center`, `absolute-y-center`, `fixed-center`, `fixed-x-center`, `fixed-y-center`                                                            |
+| Flex        | `flex-center`, `flex-between`, `flex-around`, `flex-items-*`, `flex-col-*` and more (23)                                                                                   |
+| Grid        | `grid-equal-cols`, `grid-items-*`, `grid-auto-*`, `grid-cols-fit-*`, `grid-2/3/4-cols` and more (20)                                                                       |
+| Position    | `absolute-*`, `fixed-*`: centering, corners, edge centering, fill (24)                                                                                                     |
 | Motion      | `motion-press`, `motion-float`, `motion-scale`, `motion-shrink`, `motion-rotate`, `motion-fade`                                                                            |
 | Interaction | `effect-selected`, `effect-focus`, `effect-interactive`, `effect-outline-ring`, `effect-disabled`, `effect-skeleton`, `effect-shadow`, `effect-border`, `effect-highlight` |
+| Text        | `text-clamp-2`, `text-clamp-3`, `text-clamp-4`, `text-clamp-5`                                                                                                             |
+| Layers      | `layer-base`, `layer-dropdown`, `layer-sticky`, `layer-overlay`, `layer-modal`, `layer-tooltip`                                                                            |
 
 Some shortcuts require the `primary` theme color. See the
 [shortcuts docs](./docs/en/guide/shortcuts.md) for expansions.

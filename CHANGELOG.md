@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.5] - 2026-10-26
+
+### Added
+
+- Extended layout shortcuts for flex main/cross-axis, column layouts, grid item/auto/fixed columns, position corners, edge centering and filling
+- Text clamp shortcuts: `text-clamp-2`, `text-clamp-3`, `text-clamp-4`, `text-clamp-5`
+- Layer shortcuts: `layer-base`, `layer-dropdown`, `layer-sticky`, `layer-overlay`, `layer-modal`, `layer-tooltip`
+- More documentation examples for shortcuts, borders, text clamping and shadows
+
+### Changed
+
+- Border colors now resolve theme palettes, opacity modifiers and arbitrary values
+- `overlay` / `overlay-full` include a 200ms opacity transition
+
+### Removed
+
+- Shadow rules (`shadow-*`); these utilities now fall back to `presetWind4`
+
 ## [0.0.4] - 2026-10-26
 
 ### Added

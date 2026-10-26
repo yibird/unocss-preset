@@ -230,6 +230,16 @@ describe('border rules', () => {
     expect(css).toContain('border-top:1px solid rgb(var(--w-border-regular));')
   })
 
+  it('resolves bracketed theme tokens for x and y directions', async () => {
+    const css = await generate('b-y-1-[border-regular] b-x-1-[border-regular]')
+
+    expect(css).toContain('border-top:1px solid rgb(var(--w-border-regular));')
+    expect(css).toContain('border-bottom:1px solid rgb(var(--w-border-regular));')
+    expect(css).toContain('border-left:1px solid rgb(var(--w-border-regular));')
+    expect(css).toContain('border-right:1px solid rgb(var(--w-border-regular));')
+    expect(css).not.toContain('border-regular;')
+  })
+
   it('coexists with UnoCSS border color utilities', async () => {
     const css = await generate('border-regular bg-regular b-1-[border-regular]')
 
@@ -291,10 +301,11 @@ describe('border rules', () => {
     expect(css).toContain('border-top:1px solid color-mix(in srgb, rgb(1,2,3) 50%, transparent);')
   })
 
-  it('ignores unknown colors', async () => {
-    const css = await generate('b-t-1-unknown-color b-t-1-unknown')
+  it('passes bare color tokens through and ignores unknown multi-part tokens', async () => {
+    const css = await generate('b-t-1-unknown-color b-t-1-transparent')
 
-    expect(css).not.toContain('border-top:')
+    expect(css).toContain('border-top:1px solid transparent;')
+    expect(css).not.toContain('unknown-color')
   })
 
   it('works with variants', async () => {
@@ -309,60 +320,6 @@ describe('border rules', () => {
     const css = await generate('b-all-1-primary/50')
 
     expect(css).toContain('border:1px solid color-mix(in srgb, #3b82f6 50%, transparent);')
-  })
-})
-
-describe('shadow rules', () => {
-  it('offsets shadows by direction', async () => {
-    const css = await generate('shadow-t shadow-r shadow-b shadow-l')
-
-    expect(css).toContain('.shadow-t{box-shadow:0px -1px 3px 0px rgba(0, 0, 0, 0.1);}')
-    expect(css).toContain('.shadow-r{box-shadow:1px 0px 3px 0px rgba(0, 0, 0, 0.1);}')
-    expect(css).toContain('.shadow-b{box-shadow:0px 1px 3px 0px rgba(0, 0, 0, 0.1);}')
-    expect(css).toContain('.shadow-l{box-shadow:-1px 0px 3px 0px rgba(0, 0, 0, 0.1);}')
-  })
-
-  it('supports every size', async () => {
-    const css = await generate('shadow-t-sm shadow-t-md shadow-t-lg shadow-t-xl shadow-t-2xl')
-
-    expect(css).toContain('.shadow-t-sm{box-shadow:0px -1px 2px 0px rgba(0, 0, 0, 0.05);}')
-    expect(css).toContain('.shadow-t-md{box-shadow:0px -4px 6px -1px rgba(0, 0, 0, 0.1);}')
-    expect(css).toContain('.shadow-t-lg{box-shadow:0px -10px 15px -3px rgba(0, 0, 0, 0.1);}')
-    expect(css).toContain('.shadow-t-xl{box-shadow:0px -20px 25px -5px rgba(0, 0, 0, 0.1);}')
-    expect(css).toContain('.shadow-t-2xl{box-shadow:0px -25px 50px -12px rgba(0, 0, 0, 0.25);}')
-  })
-
-  it('keeps a visible spread for 2xl', async () => {
-    const css = await generate('shadow-all-2xl')
-
-    expect(css).toContain('.shadow-all-2xl{box-shadow:0px 0px 50px -12px rgba(0, 0, 0, 0.25);}')
-  })
-
-  it('centers shadows for all', async () => {
-    const css = await generate('shadow-all shadow-all-md')
-
-    expect(css).toContain('.shadow-all{box-shadow:0px 0px 3px 0px rgba(0, 0, 0, 0.1);}')
-    expect(css).toContain('.shadow-all-md{box-shadow:0px 0px 6px -1px rgba(0, 0, 0, 0.1);}')
-  })
-
-  it('defaults a missing direction to all', async () => {
-    const withSize = await generate('shadow-md')
-    const explicit = await generate('shadow-all-md')
-
-    expect(withSize).toContain('box-shadow:0px 0px 6px -1px rgba(0, 0, 0, 0.1);')
-    expect(withSize.slice(withSize.indexOf('{'))).toEqual(explicit.slice(explicit.indexOf('{')))
-  })
-
-  it('supports a missing size', async () => {
-    const css = await generate('shadow-b')
-
-    expect(css).toContain('.shadow-b{box-shadow:0px 1px 3px 0px rgba(0, 0, 0, 0.1);}')
-  })
-
-  it('ignores invalid shadow utilities', async () => {
-    const css = await generate('shadow- shadow-x shadow-t-xxl shadow-tall')
-
-    expect(css).not.toContain('box-shadow')
   })
 })
 
@@ -425,6 +382,32 @@ describe('shortcuts', () => {
     expect(css).toContain('position:absolute;')
     expect(css).toContain('--un-translate-x:-50%;')
     expect(css).toContain('--un-translate-y:-50%;')
+  })
+
+  it('expands extended layout shortcuts', async () => {
+    const css = await generate(
+      'flex-around flex-items-baseline flex-col-center grid-items-center grid-2-cols absolute-fill',
+    )
+
+    expect(css).toContain('justify-content:space-around;')
+    expect(css).toContain('align-items:baseline;')
+    expect(css).toContain('flex-direction:column;')
+    expect(css).toContain('place-items:center;')
+    expect(css).toContain('grid-template-columns:repeat(2,minmax(0,1fr));')
+    expect(css).toContain('position:absolute;')
+    expect(css).toContain('inset:')
+  })
+
+  it('expands text clamp and layer shortcuts', async () => {
+    const css = await generate('text-clamp-2 text-clamp-5 layer-base layer-modal')
+
+    expect(css).toContain('-webkit-line-clamp:2')
+    expect(css).toContain('-webkit-line-clamp:5')
+    expect(css).toContain('line-clamp:2')
+    expect(css).toContain('line-clamp:5')
+    expect(css).toContain('z-index:0;')
+    expect(css).toContain('position:fixed;')
+    expect(css).toContain('z-index:40;')
   })
 
   it('expands button shortcuts', async () => {
